@@ -30,7 +30,6 @@ def isEmail(email):
         return False                            # if not 2 object set, return False
     
     sld = second_half_split[0]
-    print(sld)
     allowedCharacters2 = set(string.ascii_lowercase + string.digits)
     for ch in sld:
         if ch not in allowedCharacters2:        # is sld ch in allowedCharacters2 set?
@@ -48,4 +47,3 @@ def isEmail(email):
     
     return True
 print(isEmail("jdlt.realty@gmail.com"))
-print(isEmail("johnt@fuckyouvasia.com"))
