@@ -10,7 +10,6 @@ fn("abcbar") would return "abcbar" (no "foo" to replace)
 
 """
 
-
 def change_foo(x):
     return x.replace("foo", str(len(x)))
 
