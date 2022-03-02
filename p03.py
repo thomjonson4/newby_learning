@@ -4,7 +4,32 @@ i.e. "vasia.patov@gmail.com" or "john.thompson@hotmail.com", or "abc.def.ghi@yah
 There can be no more than three periods total in the username, and periods cannot be consecutive (i.e. "abc..def").
 Periods don't count in the username length limit of 15."""
 
+from pydoc import doc
 import string
+
+# returns whether each character of the inputString is within the inputSet
+def fitsInSet(inputString, inputSet):
+    for ch in inputString:
+        if ch not in inputSet:
+            return False
+    return True
+
+
+# returns whether or not the length of the inputString fits within the bounds
+def withinLengthLimit(inputString, lowerBound, upperBound):
+    if len(inputString) > upperBound or len(inputString) < lowerBound:
+        return False
+    return True
+
+    # l = len(inputString)
+    # return l <= upperBound and l >= lowerBound
+
+
+
+
+
+
+
 
 def isEmail(email):
     array = email.split('@')                    #does the email have '@'
@@ -18,16 +43,6 @@ def isEmail(email):
             continue
         ch = username[i]
         prev = username[i-1]
-
-        # prev = username[i-1] if i > 0 else "B"
-        # variable = expression if condition else other_expression
-
-        # if val > 5:
-        #     som = "a"
-        # else:
-        #     som = "b"
-
-        # som = "a" if val > 5 else "b"
         
         if ch == "." and prev == ".":
             return False
@@ -36,23 +51,13 @@ def isEmail(email):
         if number_of_periods > 3:
             return False
 
-
-
-    # for ch in username:
-    #     if ch == ".":
-    #         number_of_periods += 1
-    #     if number_of_periods > 3:
-    #         return False
-
-
     if len(username) == 0:
         return False
-    allowedCharacters = set("." + string.ascii_lowercase + "_")
-    for ch in username:
-        if ch not in allowedCharacters:         # is each character in the username a part of the set of allowed ch?
-            return False                        # if not return False
     if len(username) - number_of_periods > 15:                       # is username longer than 15 ch?
-        return False                            # if so return False
+        return False   
+                  
+    if not fitsInSet(username, set("." + string.ascii_lowercase + "_")):
+        return False
     
     second_half = array[1]
     if len(second_half) == 0:
@@ -62,25 +67,17 @@ def isEmail(email):
         return False                            # if not 2 object set, return False
     
     sld = second_half_split[0]
-    if len(sld) == 0:
+    if not withinLengthLimit(sld,1,10):
         return False
-    allowedCharacters2 = set(string.ascii_lowercase + string.digits)
-    for ch in sld:
-        if ch not in allowedCharacters2:        # is sld ch in allowedCharacters2 set?
-            return False                        # if not return False
-    if len(sld) > 10:                           # is sld longer than 10 ch?
-        return False                            # if not return False
+    if not fitsInSet(sld, set(string.ascii_lowercase + string.digits)):
+        return False
 
     tld = second_half_split[1]
-    if len(tld) == 0:
+    if not withinLengthLimit(tld,1,4):
         return False
-    allowedCharacters3 = set(string.ascii_lowercase)
-    for ch in tld:
-        if ch not in allowedCharacters3:
-            return False
-    if len(tld) > 4:
+    if not fitsInSet(tld, set(string.ascii_lowercase)):
         return False
-    
+
     return True
 
 print(isEmail("john..t@gmail.com"))
