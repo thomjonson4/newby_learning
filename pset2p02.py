@@ -1,5 +1,7 @@
-array = [1, 2, 3, 4, 5]
+# array = [1, 2, 3, 4, 5]
 # print(len(array))
+
+array = [30, 50, 20, 100]
 
 
 def sumArray(input):
@@ -13,3 +15,6 @@ def sumArray(input):
     return sum
 
 print(sumArray(array))
+print(sumArray([1,1,2]))	# 4
+print(sumArray([10,-2]))	# 8
+print(sumArray([]))         # 0
