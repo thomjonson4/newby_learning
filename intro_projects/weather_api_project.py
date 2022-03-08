@@ -49,6 +49,7 @@ r = requests.get(URL, params={
     'key': API_KEY,
     'q': location
 })
+# r = requests.get(URL + "?key={}&q={}".format(API_KEY, location))
 # print(r.content)
 
 weather_data = json.loads(r.content,)
