@@ -146,11 +146,24 @@ def half_size(image):
 
 def flip_vert(image):
     image = name
-    flipped_vert = im.transpose(Image.FLIP_LEFT_RIGHT)
-    flip_vert_rename = (output_name + ".png")
-    flipped_vert.save(flip_vert_rename)
-    flip_vert_new = Image.open(flip_vert_rename)
-    flip_vert_new.show()
+    og = im
+    flipped_v = Image.new("RGB", og.size)
+    for y in range (og.size[1]):
+        for x in range (og.size[0]):
+            new_x = og.size[1] - x
+            pixel = og.getpixel((x,y))
+            flipped_v.putpixel((new_x, y),pixel)
+    flipped_v_name = output_name + ".png"
+    flipped_v.save(flipped_v_name)
+    flipped_vim = Image.open(flipped_v_name)
+    flipped_vim.show()
+    
+    # [xs, ys] = im.size
+    # flipped_vert = im.transpose(Image.FLIP_LEFT_RIGHT)
+    # flip_vert_rename = (output_name + ".png")
+    # flipped_vert.save(flip_vert_rename)
+    # flip_vert_new = Image.open(flip_vert_rename)
+    # flip_vert_new.show()
 
 
 if transform == "grayscale":
