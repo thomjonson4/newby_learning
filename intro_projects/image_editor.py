@@ -134,6 +134,16 @@ def invert(image):
     new_inv_im = Image.open(new_inv_image)
     im.show()
 
+def half_size(image):
+    image = name
+    size = im.size
+    bic = Image.BICUBIC
+    resized_og_im = im.resize((round(size[0] * .5), round(size[1] * .5)), bic)
+    resized_og_im.save(output_name + ".png")
+    resize_im_name = output_name + ".png"
+    resize_im = Image.open(resize_im_name)
+    resize_im.show()
+
 if transform == "grayscale":
     grayscale(im)
 elif transform == "red_channel":
@@ -144,5 +154,7 @@ elif transform == "green_channel":
     green_channel(im)
 elif transform == "invert":
     invert(im)
+elif transform == "half_size":
+    half_size(im)
 else:
     print("Error")
