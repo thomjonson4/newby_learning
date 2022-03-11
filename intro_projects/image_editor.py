@@ -144,6 +144,15 @@ def half_size(image):
     resize_im = Image.open(resize_im_name)
     resize_im.show()
 
+def flip_vert(image):
+    image = name
+    flipped_vert = im.transpose(Image.FLIP_LEFT_RIGHT)
+    flip_vert_rename = (output_name + ".png")
+    flipped_vert.save(flip_vert_rename)
+    flip_vert_new = Image.open(flip_vert_rename)
+    flip_vert_new.show()
+
+
 if transform == "grayscale":
     grayscale(im)
 elif transform == "red_channel":
@@ -156,5 +165,7 @@ elif transform == "invert":
     invert(im)
 elif transform == "half_size":
     half_size(im)
+elif transform == "mirror_vertical":
+    flip_vert(im)
 else:
     print("Error")
