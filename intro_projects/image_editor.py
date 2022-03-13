@@ -59,104 +59,129 @@ import sys
 import PIL
 import os
 
-from PIL import Image, ImageOps
-im = Image.open(sys.argv[1])
-name = sys.argv[1]
+from PIL import Image, ImageOps, PngImagePlugin
+image_obj = Image.open(sys.argv[1])
+image_name = sys.argv[1]
 transform = sys.argv[2]
-output_name = sys.argv[3]
+output_image_filename = sys.argv[3]
 
-# im = Image.open("new_image.png")
-# print(im.format, im.size, im.mode)
+# im = Image.open("intro_projects/image.png")
+print(image_obj.format, image_obj.size, image_obj.mode)
 # im.show()
 # print(im.getpixel( (0,0) ))
 # im.putpixel( (0, 0), (0, 0 ,0) )
 # im.show()
 
-def red_channel(image):
-    image = name
-    [xs, ys] = im.size
-    for x in range(0, xs):
-        for y in range(0, ys):
-            color = im.getpixel( (x,y) )
-            im.putpixel((x, y), (color[0], 0 ,0))
-    im.save(output_name + ".png")
-    new_red_image = output_name + ".png"
-    new_red_im = Image.open(new_red_image)
-    im.show()
+def show_image(input_image):
+    input_image.show()
 
-def green_channel(image):
-    image = name
-    [xs, ys] = im.size
+def red_channel(input_image: PIL.PngImagePlugin.PngImageFile, output_filename):
+    # image = image_name
+    (xs, ys) = input_image.size
     for x in range(0, xs):
         for y in range(0, ys):
-            color = im.getpixel( (x,y) )
-            im.putpixel( (x, y), (0, color[1], 0) )
-    im.save(output_name + ".png")
-    new_green_image = output_name + ".png"
-    new_green_im = Image.open(new_green_image)
-    im.show()
+            color = input_image.getpixel( (x,y) )
+            input_image.putpixel((x, y), (color[0], 0 ,0))
+    # input_image.save(output_name + ".png")
+    input_image.save(output_filename)
+    input_image.show()
+
+
+# def add(x: int, y: int):
+#     return x + y
+
+def green_channel(input_image, output_image_filename):
+    # image = image_name
+    (xs, ys) = input_image.size
+    for x in range(0, xs):
+        for y in range(0, ys):
+            color = image_obj.getpixel( (x,y) )
+            image_obj.putpixel( (x, y), (0, color[1], 0) )
+    image_obj.save(output_filename)
+    image_obj.show()
 
 def blue_channel(image):
-    image = name
-    [xs, ys] = im.size
+    image = image_name
+    [xs, ys] = image_obj.size
     for x in range(0, xs):
         for y in range(0, ys):
-            color = im.getpixel( (x,y) )
-            im.putpixel( (x, y), (0, 0 , color[2]) )
-    im.save(output_name + ".png")
-    new_blue_image = output_name + ".png"
+            color = image_obj.getpixel( (x,y) )
+            image_obj.putpixel( (x, y), (0, 0 , color[2]) )
+    image_obj.save(output_image_filename + ".png")
+    new_blue_image = output_image_filename + ".png"
     new_blue_im = Image.open(new_blue_image)
-    im.show()
+    image_obj.show()
 
 def grayscale(image):
     # gray_image = ImageOps.grayscale(im)
-    image = name
-    [xs, ys] = im.size
+    image = image_name
+    [xs, ys] = image_obj.size
     for x in range(0, xs):
         for y in range(0, ys):
-            color = im.getpixel((x,y))
+            color = image_obj.getpixel((x,y))
             grey_value = int(((color[0] + color[1] + color[2])/ 3))
-            im.putpixel( (x, y), (grey_value, grey_value, grey_value) )
-    im.save(output_name + ".png")
-    new_name = output_name + ".png"
+            image_obj.putpixel( (x, y), (grey_value, grey_value, grey_value) )
+    image_obj.save(output_image_filename + ".png")
+    new_name = output_image_filename + ".png"
     nim = Image.open(new_name)
     nim.show()
 
 def invert(image):
-    image = name
-    [xs, ys] = im.size
+    image = image_name
+    [xs, ys] = image_obj.size
     for x in range(0, xs):
         for y in range(0, ys):
-            color = im.getpixel((x,y))
-            im.putpixel( (x, y), ((255-color[0]), (255-color[1]), (255-color[2])) )
-    im.save(output_name + ".png")
-    new_inv_image = output_name + ".png"
+            color = image_obj.getpixel((x,y))
+            image_obj.putpixel( (x, y), ((255-color[0]), (255-color[1]), (255-color[2])) )
+    image_obj.save(output_image_filename + ".png")
+    new_inv_image = output_image_filename + ".png"
     new_inv_im = Image.open(new_inv_image)
-    im.show()
+    image_obj.show()
 
 def half_size(image):
-    image = name
-    size = im.size
+    image = image_name
+    size = image_obj.size
     bic = Image.BICUBIC
-    resized_og_im = im.resize((round(size[0] * .5), round(size[1] * .5)), bic)
-    resized_og_im.save(output_name + ".png")
-    resize_im_name = output_name + ".png"
+    resized_og_im = image_obj.resize((round(size[0] * .5), round(size[1] * .5)), bic)
+    resized_og_im.save(output_image_filename + ".png")
+    resize_im_name = output_image_filename + ".png"
     resize_im = Image.open(resize_im_name)
     resize_im.show()
 
 def flip_vert(image):
-    image = name
-    og = im
+    og = image_obj
     flipped_v = Image.new("RGB", og.size)
     for y in range (og.size[1]):
-        for x in range (og.size[0]):
-            new_x = og.size[1] - x
+        for x in range (0, og.size[0] // 2):
+            new_x = og.size[0] - x
             pixel = og.getpixel((x,y))
-            flipped_v.putpixel((new_x, y),pixel)
-    flipped_v_name = output_name + ".png"
+            flipped_v.putpixel((new_x-1, y-1),pixel)
+    for y in range (og.size[1]):
+        for x in range (0, og.size[0] // 2 + 1):
+            pixel = og.getpixel((x,y))
+            flipped_v.putpixel((x-1, y-1),pixel)
+    flipped_v_name = output_image_filename + ".png"
     flipped_v.save(flipped_v_name)
     flipped_vim = Image.open(flipped_v_name)
     flipped_vim.show()
+
+def flip_h(input_image, output_filename):
+    og = image_obj
+    flipped_h = Image.new("RGB", og.size)
+    for x in range(og.size[0]):
+        for y in range(0, og.size[1] // 2):
+            new_y = og.size[1] - y
+            pixel = og.getpixel((x,y))
+            flipped_h.putpixel((x-1, new_y-1),pixel)
+    for x in range (og.size[0]):
+        for y in range (0, og.size[1] // 2 + 1):
+            new_y = og.size[1] - y
+            pixel = og.getpixel((x,y))
+            flipped_h.putpixel((x-1, y-1),pixel)
+    flipped_h.save(output_filename + ".png")
+    flipped_h.show()
+
+# flip_vert(image_obj)
     
     # [xs, ys] = im.size
     # flipped_vert = im.transpose(Image.FLIP_LEFT_RIGHT)
@@ -167,18 +192,20 @@ def flip_vert(image):
 
 
 if transform == "grayscale":
-    grayscale(im)
+    grayscale(image_obj)
 elif transform == "red_channel":
-    red_channel(im)
+    red_channel(image_obj, output_image_filename)
 elif transform == "blue_channel":
-    blue_channel(im)
+    blue_channel(image_obj)
 elif transform == "green_channel":
-    green_channel(im)
+    green_channel(image_obj)
 elif transform == "invert":
-    invert(im)
+    invert(image_obj)
 elif transform == "half_size":
-    half_size(im)
+    half_size(image_obj)
 elif transform == "mirror_vertical":
-    flip_vert(im)
+    flip_vert(image_obj)
+elif transform == "mirror_horizontal":
+    flip_h(image_obj, output_image_filename)
 else:
     print("Error")
