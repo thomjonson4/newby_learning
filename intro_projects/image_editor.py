@@ -173,13 +173,26 @@ def flip_h(input_image, output_filename):
             new_y = og.size[1] - y
             pixel = og.getpixel((x,y))
             flipped_h.putpixel((x-1, new_y-1),pixel)
-    for x in range (og.size[0]):
+    for x in range(og.size[0]):
         for y in range (0, og.size[1] // 2 + 1):
             new_y = og.size[1] - y
             pixel = og.getpixel((x,y))
             flipped_h.putpixel((x-1, y-1),pixel)
     flipped_h.save(output_filename + ".png")
     flipped_h.show()
+
+def print_pixel(input_image, output_image, x_start, y_start, x_end, y_end, loc_x, loc_y):
+    input_image = image_obj
+    # one_hund = Image.new("RGB", (x_size,y_size))
+    for x in range (x_start,x_end):
+        for y in range (y_start,y_end):
+            pixel = input_image.getpixel((x,y))
+            output_image.putpixel((loc_x + x,loc_y + y), pixel)
+    # one_hund.save(output_filename + ".png")
+    input_image.show()
+
+def print_five_hund(input_img, output_filname):
+    five_hund = Image.new("RGB", (500,500))
 
 # flip_vert(image_obj)
     
@@ -207,5 +220,10 @@ elif transform == "mirror_vertical":
     flip_vert(image_obj)
 elif transform == "mirror_horizontal":
     flip_h(image_obj, output_image_filename)
+elif transform == "100_cut":
+    print_pixel(image_obj, image_obj, 0, 0, 100, 100, 100, 100)
 else:
     print("Error")
+
+# image_100 = Image.open("new_100.png")
+# print(image_100.size)
