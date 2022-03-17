@@ -194,17 +194,9 @@ def print_pixel(input_image, output_image, x_start, y_start, x_end, y_end, loc_x
 def print_five_hund(input_image, output_filename):
     input_image = image_obj
     five_hund = Image.new("RGB", (500,500))
-    dest_x = 0
-    dest_y = 0
-    while dest_y <= 400:
-        print(input_image, five_hund, 0, 0, 100, 100, dest_x, dest_y)
-        if dest_x == 400 and dest_y == 400:
-            break
-        elif dest_y < 400 and dest_x < 400:
-            dest_x += 100
-        elif dest_x == 400:
-            dest_x == 0
-            dest_y += 100
+    for y in range (0, 500, 100):
+        for x in range (0, 500, 100):
+            print_pixel(input_image, five_hund, 0, 0, 100, 100, x, y)
     five_hund.save(output_filename + ".png")
     five_hund.show()
     
