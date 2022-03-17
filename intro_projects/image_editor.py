@@ -210,6 +210,16 @@ def print_four_hund(input_image, output_filename):
     four_hund.save(output_filename + ".png")
     four_hund.show()
 
+def three_by_five(input_image, output_filename):
+    input_image = image_obj
+    [width, height] = input_image.size
+    threeXFive = Image.new("RGB", (450,500))
+    for y in range (0, 500, 100):
+        for x in range (0, 450, 150):
+            print_pixel(input_image, threeXFive, (width - 150), 0, width, 100, x, y)
+    threeXFive.save(output_filename + ".png")
+    threeXFive.show()
+
     # print_pixel(input_image, five_hund, 0, 0, 100, 100, 0, 0)
     # print_pixel(input_image, five_hund, 0, 0, 100, 100, 100, 0)
     # print_pixel(input_image, five_hund, 0, 0, 100, 100, 200, 0)
@@ -250,6 +260,8 @@ elif transform == "tile_100":
     print_five_hund(image_obj, output_image_filename)
 elif transform == "tile_50":
     print_four_hund(image_obj, output_image_filename)
+elif transform == "tile_150_100":
+    three_by_five(image_obj, output_image_filename)
 else:
     print("Error")
 
