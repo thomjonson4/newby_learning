@@ -189,10 +189,32 @@ def print_pixel(input_image, output_image, x_start, y_start, x_end, y_end, loc_x
             pixel = input_image.getpixel((x,y))
             output_image.putpixel((loc_x + x,loc_y + y), pixel)
     # one_hund.save(output_filename + ".png")
-    input_image.show()
+    # input_image.show()
 
-def print_five_hund(input_img, output_filname):
+def print_five_hund(input_image, output_filename):
+    input_image = image_obj
     five_hund = Image.new("RGB", (500,500))
+    dest_x = 0
+    dest_y = 0
+    while dest_y <= 400:
+        print(input_image, five_hund, 0, 0, 100, 100, dest_x, dest_y)
+        if dest_x == 400 and dest_y == 400:
+            break
+        elif dest_y < 400 and dest_x < 400:
+            dest_x += 100
+        elif dest_x == 400:
+            dest_x == 0
+            dest_y += 100
+    five_hund.save(output_filename + ".png")
+    five_hund.show()
+    
+    # print_pixel(input_image, five_hund, 0, 0, 100, 100, 0, 0)
+    # print_pixel(input_image, five_hund, 0, 0, 100, 100, 100, 0)
+    # print_pixel(input_image, five_hund, 0, 0, 100, 100, 200, 0)
+    # print_pixel(input_image, five_hund, 0, 0, 100, 100, 300, 0)
+    # print_pixel(input_image, five_hund, 0, 0, 100, 100, 400, 0)
+    # print_pixel(input_image, five_hund, 0, 0, 100, 100, 0, 100)
+    # print_pixel(input_image, five_hund, 0, 0, 100, 100, 100, 0)
 
 # flip_vert(image_obj)
     
@@ -222,6 +244,8 @@ elif transform == "mirror_horizontal":
     flip_h(image_obj, output_image_filename)
 elif transform == "100_cut":
     print_pixel(image_obj, image_obj, 0, 0, 100, 100, 100, 100)
+elif transform == "tile_100":
+    print_five_hund(image_obj, output_image_filename)
 else:
     print("Error")
 
