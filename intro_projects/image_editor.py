@@ -220,6 +220,31 @@ def three_by_five(input_image, output_filename):
     threeXFive.save(output_filename + ".png")
     threeXFive.show()
 
+def average_color(input_image, output_filename):
+    [length, height] = image_obj.size
+    total_r = 0
+    total_g = 0
+    total_b = 0
+    total_a = 0
+    total_pixels = length * height
+    for x in range (length):
+        for y in range (height):
+            array = image_obj.getpixel((x, y))
+            total_r += array[0]
+            total_g += array[1]
+            total_b += array[2]
+            total_a += array[3]
+    average_r = int(total_r / total_pixels)
+    average_g = int(total_g / total_pixels)
+    average_b = int(total_b / total_pixels)
+    average_a = int(total_b / total_pixels)
+    new_image = Image.new("RGB", (100,100))
+    for x in range (100):
+        for y in range (100):
+            new_image.putpixel((x,y), (average_r, average_g, average_b, average_a))
+    new_image.save(output_filename + ".png")
+    new_image.show()
+
     # print_pixel(input_image, five_hund, 0, 0, 100, 100, 0, 0)
     # print_pixel(input_image, five_hund, 0, 0, 100, 100, 100, 0)
     # print_pixel(input_image, five_hund, 0, 0, 100, 100, 200, 0)
@@ -262,6 +287,8 @@ elif transform == "tile_50":
     print_four_hund(image_obj, output_image_filename)
 elif transform == "tile_150_100":
     three_by_five(image_obj, output_image_filename)
+elif transform == "average_color":
+    average_color(image_obj, output_image_filename)
 else:
     print("Error")
 
