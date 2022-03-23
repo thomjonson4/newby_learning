@@ -163,12 +163,27 @@ def sum_digits_squares_primes_B(N):
 # # Use the '|' character for pickets, and the '-' character for the sections
 
 
-# def picket_fence_A(section_length, num_pickets):
-#     pass
+def picket_fence_A(section_length, num_pickets):
+    output_list = ""
+    for picket_num in range (num_pickets):
+        if picket_num < num_pickets:
+            output_list += "|"
+        for space in range (section_length):
+            if picket_num == num_pickets - 1:
+                break
+            elif space < section_length:
+                output_list += "-"
+    print(output_list)
+    
 
 
-# def picket_fence_B(section_length, num_pickets):
-#     pass
+def picket_fence_B(section_length, num_pickets):
+    pickets = "-" * section_length
+    picket_list = [pickets for i in range (num_pickets)]
+    output_list= "|".join(picket_list)
+    print(output_list)
+picket_fence_B(2,4)
+
 
 
 # # 5)     Write a function, that given a list of locations,
