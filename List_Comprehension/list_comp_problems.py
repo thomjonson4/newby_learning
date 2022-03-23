@@ -33,14 +33,18 @@ def first_n_odd_numbers_B(N) -> list[int]:
 # # 2)   Write a function, that when given a list of words, returns only a list of only those
 # # words that are of odd length.
 
+words = ["hell", "goodbye", "smile", "justice", "play", "lacking", "two", "in"]
+def odd_length_words_A(words):
+    new_list = []
+    for word in range (len(words)):
+        if len(words[word]) % 2 == 1:
+            new_list.append(words[word])
+    print(new_list)
 
-# def odd_length_words_A(words):
-#     pass
 
-
-# def odd_length_words_B(words):
-#     pass
-
+def odd_length_words_B(words) -> list[int]:
+    return [words[word] for word in range (len(words)) if len(words[word]) % 2 == 1]
+print(odd_length_words_B(words))
 
 # # We could compare the lists directly (instead of their length), but then we'd need
 # # the words to be in the exact same order too.
