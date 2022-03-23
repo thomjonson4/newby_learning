@@ -69,13 +69,45 @@ print(odd_length_words_B(words))
 # # prime numbers below 12               -> [2,  3,  5,  7,  11]
 # # their squares                        -> [4,  9, 25, 49, 121]
 # # sum of digits                        -> [4,  9,  7, 13,   4]
+N = 12
 
-# def sum_digits_squares_primes_A(N):
-#     pass
+def prime_array(N):
+    new_list = []
+    for num in range(0, N+1):
+        if num > 1:
+            for i in range(2, num):
+                if (num % i) == 0:
+                    break
+            else:
+                new_list.append(num)
+    return new_list
+
+def squares_primes_A(N):
+    squares = []
+    array = prime_array(N)
+    for item in range (len(array)):
+        square = array[item] ** 2
+        squares.append(square)
+    return squares
+
+def sum_digits_squares_primes_A(N):
+    og_array = squares_primes_A(N)
+    new_sum_array = []
+    for num in range (len(og_array)):
+        list = [int(x) for x in str(og_array[num])]
+        digit_sum = 0
+        for digit in range (len(list)):
+            digit_sum += list[digit]
+        new_sum_array.append(digit_sum)
+    print(new_sum_array)
+
+# squares_primes_A(N)
+sum_digits_squares_primes_A(N)
 
 
-# def sum_digits_squares_primes_B(N):
-#     pass
+
+def sum_digits_squares_primes_B(N):
+    pass
 
 
 # assert(sum_digits_squares_primes_A(50) == sum_digits_squares_primes_B(50))
