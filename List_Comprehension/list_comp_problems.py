@@ -71,6 +71,7 @@ print(odd_length_words_B(words))
 # # sum of digits                        -> [4,  9,  7, 13,   4]
 N = 12
 
+
 def prime_array(N):
     new_list = []
     for num in range(0, N+1):
@@ -90,24 +91,56 @@ def squares_primes_A(N):
         squares.append(square)
     return squares
 
+# squares_primes_A(N)
 def sum_digits_squares_primes_A(N):
     og_array = squares_primes_A(N)
     new_sum_array = []
     for num in range (len(og_array)):
-        list = [int(x) for x in str(og_array[num])]
+        array = [int(x) for x in str(og_array[num])]
         digit_sum = 0
-        for digit in range (len(list)):
-            digit_sum += list[digit]
+        for digit in range (len(array)):
+            digit_sum += array[digit]
         new_sum_array.append(digit_sum)
     print(new_sum_array)
 
-# squares_primes_A(N)
-sum_digits_squares_primes_A(N)
 
 
+def example():
+    array = [123,1,2,3,5,8,13,21]
+    array2 = [num*num for num in array]
+    array3 = [str(num) for num in array]
+    array4 = [str(num) for num in array if num % 2 == 0]
+
+    sumdigits = [
+        sum(
+            [
+                int(digit) 
+                for digit in str(num)
+            ]
+        ) 
+        for num in array
+    ]
+    
+    # num -> 123
+    # str(num) -> '123'
+    # digit -> '1'
+    # int(digit) -> 1
+    # digit -> '2'
+    # ...
+    # [1,2,3]
+    # sum([1,2,3]) -> 6
+    # [6, ....]
 
 def sum_digits_squares_primes_B(N):
-    pass
+    og_array = squares_primes_A(N)
+    array2 = [sum([int(digit) for digit in str(num)]) for num in og_array]
+    print(array2)
+
+    # s = sum([1,2,3])
+    # x = 123
+    # xstr = str(x)
+    # for ch in xstr:
+    #     digit = int(ch)
 
 
 # assert(sum_digits_squares_primes_A(50) == sum_digits_squares_primes_B(50))
