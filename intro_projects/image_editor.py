@@ -44,7 +44,7 @@
 # Computes the average color of the image, and creates a new 100x100 image that contains just that color.
 
 # color_palette
-# Given a following color palette of 64 colors[1], replace each color in the image with a color from the palette that is closest to the original color. The distance between two colors is defined as the average of the differences of the RGB color values.
+# Given the following color palette of 64 colors[1], replace each color in the image with a color from the palette that is closest to the original color. The distance between two colors is defined as the average of the differences of the RGB color values.
 
 # For example:
 # The distance between RGB(10, 10, 10) and (12, 12, 15) is 3.
@@ -58,15 +58,16 @@ from operator import imod
 import sys
 import PIL
 import os
+import math
 
 from PIL import Image, ImageOps, PngImagePlugin
-image_obj = Image.open(sys.argv[1])
-image_name = sys.argv[1]
-transform = sys.argv[2]
-output_image_filename = sys.argv[3]
+# image_obj = Image.open(sys.argv[1])
+# image_name = sys.argv[1]
+# transform = sys.argv[2]
+# output_image_filename = sys.argv[3]
 
 # im = Image.open("intro_projects/image.png")
-print(image_obj.format, image_obj.size, image_obj.mode)
+# print(image_obj.format, image_obj.size, image_obj.mode)
 # im.show()
 # print(im.getpixel( (0,0) ))
 # im.putpixel( (0, 0), (0, 0 ,0) )
@@ -262,35 +263,125 @@ def average_color(input_image, output_filename):
     # flip_vert_new = Image.open(flip_vert_rename)
     # flip_vert_new.show()
 
+color_palette = [(0, 0, 0),
+(0, 0, 85),
+(0, 0, 170),
+(0, 0, 255),
+(0, 85, 0),
+(0, 85, 85),
+(0, 85, 170),
+(0, 85, 255),
+(0, 170, 0),
+(0, 170, 85),
+(0, 170, 170),
+(0, 170, 255),
+(0, 255, 0),
+(0, 255, 85),
+(0, 255, 170),
+(0, 255, 255),
+(85, 0, 0),
+(85, 0, 85),
+(85, 0, 170),
+(85, 0, 255),
+(85, 85, 0),
+(85, 85, 85),
+(85, 85, 170),
+(85, 85, 255),
+(85, 170, 0),
+(85, 170, 85),
+(85, 170, 170),
+(85, 170, 255),
+(85, 255, 0),
+(85, 255, 85),
+(85, 255, 170),
+(85, 255, 255),
+(170, 0, 0),
+(170, 0, 85),
+(170, 0, 170),
+(170, 0, 255),
+(170, 85, 0),
+(170, 85, 85),
+(170, 85, 170),
+(170, 85, 255),
+(170, 170, 0),
+(170, 170, 85),
+(170, 170, 170),
+(170, 170, 255),
+(170, 255, 0),
+(170, 255, 85),
+(170, 255, 170),
+(170, 255, 255),
+(255, 0, 0),
+(255, 0, 85),
+(255, 0, 170),
+(255, 0, 255),
+(255, 85, 0),
+(255, 85, 85),
+(255, 85, 170),
+(255, 85, 255),
+(255, 170, 0),
+(255, 170, 85),
+(255, 170, 170),
+(255, 170, 255),
+(255, 255, 0),
+(255, 255, 85),
+(255, 255, 170),
+(255, 255, 255)]
 
-if transform == "grayscale":
-    grayscale(image_obj)
-elif transform == "red_channel":
-    red_channel(image_obj, output_image_filename)
-elif transform == "blue_channel":
-    blue_channel(image_obj)
-elif transform == "green_channel":
-    green_channel(image_obj)
-elif transform == "invert":
-    invert(image_obj)
-elif transform == "half_size":
-    half_size(image_obj)
-elif transform == "mirror_vertical":
-    flip_vert(image_obj)
-elif transform == "mirror_horizontal":
-    flip_h(image_obj, output_image_filename)
-elif transform == "100_cut":
-    print_pixel(image_obj, image_obj, 0, 0, 100, 100, 100, 100)
-elif transform == "tile_100":
-    print_five_hund(image_obj, output_image_filename)
-elif transform == "tile_50":
-    print_four_hund(image_obj, output_image_filename)
-elif transform == "tile_150_100":
-    three_by_five(image_obj, output_image_filename)
-elif transform == "average_color":
-    average_color(image_obj, output_image_filename)
-else:
-    print("Error")
+input_image = Image.open("image.png")
+def palette_checker(input_image):
+    [width, height] = input_image.size
+    new_image = Image.new("RGB", input_image.size) 
+    for x in range (width):
+        for y in range (height):
+            og_pixel = input_image.getpixel((x,y))
+            mini = float('inf')
+            min_value = None
+            for i in range (64):
+                r = int(math.fabs(color_palette[i][0] - og_pixel[0]))
+                g = int(math.fabs(color_palette[i][1] - og_pixel[1]))
+                b = int(math.fabs(color_palette[i][2] - og_pixel[2]))
+                a = og_pixel[3]
+                difference = int((r + g + b) / 3)
+                difference = mini
+                if difference < mini:
+                    mini = difference
+                    min_value = difference
+                    index = i
+            new_image.putpixel((x,y), color_palette[index])
+    new_image.show()
+palette_checker(input_image)
+
+# if transform == "grayscale":
+#     grayscale(image_obj)
+# elif transform == "red_channel":
+#     red_channel(image_obj, output_image_filename)
+# elif transform == "blue_channel":
+#     blue_channel(image_obj)
+# elif transform == "green_channel":
+#     green_channel(image_obj)
+# elif transform == "invert":
+#     invert(image_obj)
+# elif transform == "half_size":
+#     half_size(image_obj)
+# elif transform == "mirror_vertical":
+#     flip_vert(image_obj)
+# elif transform == "mirror_horizontal":
+#     flip_h(image_obj, output_image_filename)
+# elif transform == "100_cut":
+#     print_pixel(image_obj, image_obj, 0, 0, 100, 100, 100, 100)
+# elif transform == "tile_100":
+#     print_five_hund(image_obj, output_image_filename)
+# elif transform == "tile_50":
+#     print_four_hund(image_obj, output_image_filename)
+# elif transform == "tile_150_100":
+#     three_by_five(image_obj, output_image_filename)
+# elif transform == "average_color":
+#     average_color(image_obj, output_image_filename)
+# elif transform == "color_palette":
+#     palette_checker(image_obj)
+# else:
+#     print("Error")
 
 # image_100 = Image.open("new_100.png")
 # print(image_100.size)
