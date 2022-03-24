@@ -179,8 +179,9 @@ def picket_fence_A(section_length, num_pickets):
 
 def picket_fence_B(section_length, num_pickets):
     pickets = "-" * section_length
-    picket_list = [pickets for i in range (num_pickets)]
-    output_list= "|".join(picket_list)
+    picket_list = ["|" + pickets for i in range (num_pickets - 1)]
+    output_list = "".join(picket_list)
+    output_list += "|"
     print(output_list)
 picket_fence_B(2,4)
 
