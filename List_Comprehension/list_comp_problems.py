@@ -198,14 +198,32 @@ picket_fence_B(2,4)
 # # Also, some locations might not return a populated response from the weather api. 
 # # You should handle this case.
 
+test_locations = [
+    'new york city','dubai','tokyo','stockholm','sydney','nurburg',
+    'st.petersburg','kansas city','daytona','mexico city', 'tijuana', 'cozumel',
+    'san francisco', 'mountain view','vilnius','kyoto', 'barcelona','madrid',
+    'liverpool','london', 'nottingham','outer fucking space man'
+    ]
 
-# def get_locations_where_temperature_is_even(locations):
-#     pass
+import requests
+import json
+import sys
+
+API_KEY = '497364ec561740f5812190752220803'
+
+URL = 'http://api.weatherapi.com/v1/current.json'
+
+def gets_weather(location):
+    r = requests.get(URL, params={
+        'key': API_KEY,
+        'q': location
+})
+    return json.loads(r.content)['current']['temp_c']
+
+print(gets_weather("New York City"))
 
 
-# test_locations = [
-#     'new york city','dubai','tokyo','stockholm','sydney','nurburg',
-#     'st.petersburg','kansas city','daytona','mexico city', 'tijuana', 'cozumel',
-#     'san francisco', 'mountain view','vilnius','kyoto', 'barcelona','madrid',
-#     'liverpool','london', 'nottingham','outer fucking space man'
-#     ]
+def get_locations_where_temperature_is_even(location_list):
+    even_temp_locations = [gets_weather(location) for location in range (len(test_locations)) if round(gets_weather(location)) % 2 == 0]
+    print(even_temp_locations)
+get_locations_where_temperature_is_even(test_locations)
